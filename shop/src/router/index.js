@@ -13,6 +13,8 @@ import Category from '@/views/layout/category'
 import Cart from '@/views/layout/cart'
 import User from '@/views/layout/user'
 
+import store from '@/store'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -50,4 +52,19 @@ const router = new VueRouter({
   ]
 })
 
+const authUrl = ['/pay', '/myorder']
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+  // 判断是否为权限页面
+  if (!authUrl.includes(to.path)) {
+    next()
+    return
+  }
+  const token = store.getters.token
+  if (token) {
+    next()
+  } else {
+    next('/login')
+  }
+})
 export default router
