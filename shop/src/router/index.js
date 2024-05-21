@@ -4,7 +4,7 @@ import Login from '@/views/login'
 import Myorder from '@/views/myorder'
 import Layout from '@/views/layout'
 import Pay from '@/views/pay'
-import Prodepail from '@/views/prodepail'
+import Prodetail from '@/views/prodetail'
 import Search from '@/views/search'
 import Searchlist from '@/views/search/list'
 // 二级路由
@@ -46,7 +46,7 @@ const router = new VueRouter({
     { path: '/myorder', component: Myorder },
     { path: '/pay', component: Pay },
     // 动态路由传参，商品id
-    { path: '/prodepail/:id', component: Prodepail },
+    { path: '/prodetail/:id', component: Prodetail },
     { path: '/search', component: Search },
     { path: '/searchlist', component: Searchlist }
   ]
