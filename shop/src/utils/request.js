@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import { Toast } from 'vant'
 // 创建axios实例，将来对创建出来的实例进行配置
@@ -17,6 +18,11 @@ instance.interceptors.request.use(function (config) {
     duration: 0 // 不会自动关闭
   })
 
+  // 携带请求头token
+  const token = store.getters.token
+  if (token) {
+    config.headers['Access-Token'] = token
+  }
   return config
 }, function (error) {
 // 对请求错误做些什么

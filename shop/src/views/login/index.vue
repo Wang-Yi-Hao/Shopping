@@ -105,7 +105,8 @@ export default {
       const res = await codeLogin(this.mobile, this.smsCode)
       this.$store.commit('user/setUserInfo', res.data)
       this.$toast('登陆成功')
-      this.$router.push('/')
+      const url = this.$route.query.backUrl || '/'
+      this.$router.replace(url)
     }
   },
   // 离开页面清除定时器

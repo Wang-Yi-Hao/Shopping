@@ -1,7 +1,8 @@
 // vant 按需导入
 import Vue from 'vue'
-import { Tabbar, TabbarItem, NavBar, Toast, Search, Swipe, SwipeItem, Grid, GridItem, Icon, Lazyload, Rate, ActionSheet } from 'vant'
+import { Dialog, Tabbar, TabbarItem, NavBar, Toast, Search, Swipe, SwipeItem, Grid, GridItem, Icon, Lazyload, Rate, ActionSheet } from 'vant'
 
+Vue.use(Dialog)
 Vue.use(ActionSheet)
 Vue.use(Rate)
 Vue.use(Lazyload)
