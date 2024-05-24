@@ -102,7 +102,7 @@
         </div>
         <div class="showbtn" v-if="detail.stock_total > 0">
           <div class="btn" v-if="mode === 'cart'" @click="addCart()">加入购物车</div>
-          <div class="btn now" v-else>立刻购买</div>
+          <div class="btn now" v-else @click="goBuyNow()">立刻购买</div>
         </div>
         <div class="btn-none" v-else>该商品已抢完</div>
       </div>
@@ -115,12 +115,14 @@ import { getProComments, getProDetail } from '@/api/prodict'
 import defaultImg from '@/assets/default-avatar.png'
 import CountBox from '@/components/CountBox.vue'
 import { addCart } from '@/api/cart'
+import loginConfim from '@/mixins/loginConfim'
 
 export default {
   name: 'ProDetail',
   components: {
     CountBox
   },
+  mixins: [loginConfim],
   data () {
     return {
       images: [],
@@ -158,22 +160,27 @@ export default {
       this.mode = 'bynow'
     },
     async addCart () {
-      if (!this.$store.getters.token) {
-        this.$dialog.confirm({ title: '温馨提示', message: '需要登录才能继续', confirmButtonText: '去登录', cancelButtonText: '再逛逛' }).then(() => {
-          this.$router.replace(
-            {
-              path: '/login',
-              query: {
-                backUrl: this.$route.fullPath
-              }
-            })
-        }).catch(() => {})
+      if (this.loginConfim()) {
         return
       }
       const { data } = await addCart(this.goodsId, this.addCount, this.detail.skuList[0].goods_sku_id)
       this.cartTotal = data.cartTotal
       this.$toast('加入购物车成功')
       this.showPannel = false
+    },
+    goBuyNow () {
+      if (this.loginConfim()) {
+        return
+      }
+      this.$router.push({
+        path: '/pay',
+        query: {
+          mode: 'buyNow',
+          goodsId: this.goodsId,
+          goodsSkuId: this.detail.skuList[0].goods_sku_id,
+          goodsNum: this.addCount
+        }
+      })
     }
   },
   computed: {
