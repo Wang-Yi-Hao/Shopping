@@ -12,3 +12,25 @@ export const checkOrder = (mode, obj) => {
     }
   })
 }
+
+// 提交订单
+export const submitOrder = (mode, obj) => {
+  return request.post('/checkout/submit', {
+    mode,
+    payType: 10,
+    couponId: 0,
+    delivery: 10,
+    isUsePoints: 0,
+    ...obj
+  })
+}
+
+// 订单列表
+export const getMyOrderList = (dataType, page) => {
+  return request.get('/order/list', {
+    params: {
+      dataType,
+      page
+    }
+  })
+}
